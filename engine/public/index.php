@@ -25,10 +25,11 @@ if ($url_array[1] == "") {
         }
     }
 }
-$params = prepareVariables($page);
+$title = $page;
+$params = prepareVariables($page, $action, $id);
 
 
-echo render($page, $params);
+echo render($page, $params, $title);
 
 
 closeDb();

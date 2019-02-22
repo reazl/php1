@@ -1,5 +1,5 @@
 <?php
-define('SITE_TITLE', 'Урок 5');
+define('SITE_TITLE', 'Урок 6');
 
 define("TEMPLATES_DIR", "../templates/");
 define("ENGINE_DIR", "../engine/");

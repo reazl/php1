@@ -8,9 +8,9 @@
 <div class="gallery">
 
     <? foreach ($images as $image): ?>
-        <div class="photo"><a rel="gallery" href="<?='../' . ORIGINALS_DIR . '/' . $image['filename']?>" target="blank">
+        <div class="photo"><a href="<?='../image/' . $image['idx']?>" target="blank">
             <img src="<?='../' . THUMB_DIR . '/' . $image['filename']?>" width="150" height="100" />
-        <div id="likes-count" class="likes-count"><?=$image['likes']?></div></a>
+        <div id="likes-count_<?=$image['idx']?>" class="likes-count"><?=$image['likes']?></div></a>
         <input id="lucas" data-id="<?=$image['idx']?>" class="like" type="submit" value=""/></div>
 
 <? endforeach; ?>
@@ -24,20 +24,22 @@
 
 <script>
     $(document).ready(function(){
+
         $(".like").on('click', function(){
-            let id = $(this).data("id");
-            
+            var id = $(this).data("id");
+
             $.ajax({
                 url: "/addlike/",
                 type: "POST",
-                dataType : "text",
+                dataType : "json",
                 data:{
                     id: id,
                 },
-                error: function() {console.log(id);},
+                error: function(answer) {console.log(answer);
+                console.log("ajax error");},
                 success: function(answer){
-                    console.log("done");
-                    $('#likes-count').html(answer.likes);
+                    console.log(answer);
+                    $('#likes-count_'+id).html(answer.likes);
                 }
 
             })

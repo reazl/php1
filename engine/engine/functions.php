@@ -1,7 +1,7 @@
 <?php
 
 
-function prepareVariables($page){
+function prepareVariables($page, $action, $id){
     $params = [];
     switch ($page) {
         case 'index':
@@ -9,16 +9,18 @@ function prepareVariables($page){
 
         case 'news':
             $params['news'] = getNews();
+            $params['title'] = 'Новости';
             break;
 
         case 'newspage':
             $content = getNewsContent($_GET['id']);
             $params['prev'] = $content['prev'];
             $params['text'] = $content['text'];
+            $params['title'] = 'Новость '. $_GET['id'];
             break;
 
         case 'gallery':
-            $params['title'] = 'MyGallery';      // Как поменять заголовок страницы?
+
             if (isset($_GET['message'])){
                 switch((int)$_GET['message']){
                     case 1: $message = "File uploaded";
@@ -31,34 +33,50 @@ function prepareVariables($page){
 
             $params = [
                 'message' => $message,
-                'images' => getImages()
+                'images' => getImages(),
+                'title' => 'Галерея'
             ];
             break;
+
+        case "image":
+            //получаем индекс изображения
+            $id = (int)$id;
+
+            //подготовим переменные для шаблона
+            $image = getImage($id);
+            $params['image'] = $image['filename'];
+            $params['likes'] = $image['likes'];
+            $params['id'] = $image['idx'];
+            $params['title'] = 'Изображение '. $image['filename'];
+
+            break;
+
         case 'addlike':
             $id = (int)$_POST['id'];
             addLucas($id);
             $image = getImage($id);
             $params['likes'] = $image['likes'];
             $params['is_ajax'] = true;
+
             break;
     }
     return $params;
 }
 function addLucas($id){
-    $sql = "UPDATE `images` SET `likes` = `likes` + 1 WHERE idx={$id}";
+    $sql = "UPDATE `images` SET `likes` = `likes` + 1 WHERE `idx` = {$id}";
     executeQuery($sql);
-   // header("Location: ?page=gallery"); Не работает. пока не знаю как автообновлять кол-во лайков...
+
 }
 
 function getImage($id){
-    $sql = "SELECT * FROM images WHERE `id` = $id";
+    $sql = "SELECT * FROM images WHERE `idx` = {$id}";
     $images = getAssocResult($sql);
     //var_dump($images);
     return $images[0];
 }
 
 function getImages(){
-    $sql = "SELECT * FROM images";
+    $sql = "SELECT * FROM images ORDER BY likes DESC";
     $images = getAssocResult($sql);
     //var_dump($images);
     return $images;
@@ -136,12 +154,18 @@ function getNewsContent($id){
     return $result;
 }
 
-function render($page, $params = []){
-    return renderTemplate(LAYOUTS_DIR . 'main', [
-        'content' => renderTemplate($page, $params),
-        'menu' => renderTemplate('menu', $params),
-        'title' => SITE_TITLE
-    ]);
+function render($page, $params = [], $title){
+    if (!$params['is_ajax']) {
+        return renderTemplate(LAYOUTS_DIR . 'main', [
+            'content' => renderTemplate($page, $params),
+            'menu' => renderTemplate('menu', $params),
+            'title' => SITE_TITLE . " - " . $params['title']
+        ]);
+    } else {
+
+        return json_encode($params);
+    }
+
 }
 
 
@@ -154,6 +178,7 @@ function renderTemplate($page, $params = []){
     if (file_exists($fileName)) {
         include $fileName;
     } else {
+        echo $fileName;
         Die('Страницы не существует 404');
     }
     return ob_get_clean();
