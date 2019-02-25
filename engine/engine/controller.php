@@ -30,12 +30,31 @@ function prepareVariables($page, $action, $id){
                     default: $message = '';
                 }
             }
+            if (isset($_GET['sort'])) {
 
-            $params = [
-                'message' => $message,
-                'images' => getImages(),
-                'title' => 'Галерея'
-            ];
+                $field = $_GET['sort'];
+                $direct = $_GET['direct'];
+                if ($_GET['sort'] == "feedback") {
+                    $params = [
+                        'message' => $message,
+                        'title' => 'Галерея',
+                        'images' => imgByFB($direct)
+                    ];
+                } else {
+                    $params = [
+                        'message' => $message,
+                        'title' => 'Галерея',
+                        'images' => getImages($field, $direct),
+                    ];
+                }} else {
+                $field = 'likes';
+                $direct = 'desc';
+                $params = [
+                    'message' => $message,
+                    'images' => getImages($field, $direct),
+                    'title' => 'Галерея'
+                ];
+            }
             break;
 
         case "image":

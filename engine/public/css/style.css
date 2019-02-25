@@ -33,8 +33,16 @@ a{
 	left: 20px;
 	background-color: white;
 	display: block;
-
 }
+
+.gallery .price {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	background-color: white;
+	display: block;
+}
+
 .like{
 	border: none;
 	background-size: 12px 17px;

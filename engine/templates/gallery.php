@@ -5,13 +5,30 @@
 </p>
 <? endif; ?>
 
+
 <div class="gallery">
+    <form action="" method="get">Сортировка изображений по:
+        <select name="sort" id="sort">
+            <option value="likes">Популярность</option>
+            <option value="feedback">Кол-во отзывов</option>
+            <option value="idx">Дата</option>
+            <option value="price">Цена</option>
+        </select>
+        Направление:
+        <select name="direct" id="direct">
+            <option value="desc">По убыванию</option>
+            <option value="asc">По возрастанию</option>
+        </select>
+        <input type="submit" value="Сортировать">
+    </form>
 
     <? foreach ($images as $image): ?>
         <div class="photo"><a href="<?='../image/' . $image['idx']?>" target="blank">
             <img src="<?='../' . THUMB_DIR . '/' . $image['filename']?>" width="150" height="100" />
-        <div id="likes-count_<?=$image['idx']?>" class="likes-count"><?=$image['likes']?></div></a>
-        <input id="lucas" data-id="<?=$image['idx']?>" class="like" type="submit" value=""/></div>
+        <div id="likes-count_<?=$image['idx']?>" class="likes-count"><?=$image['likes']?></div>
+                <div class="price" id="price"><?=$image['price']?></div></a>
+        <input id="lucas" data-id="<?=$image['idx']?>" class="like" type="submit" value=""/>
+        </div>
 
 <? endforeach; ?>
 </div>

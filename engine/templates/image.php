@@ -1,3 +1,4 @@
+<? include_once ENGINE_DIR . 'feedback-item.php'; ?>
 <h1>Фотогалерея</h1>
 <div class="item">
 <div class="photo">
@@ -30,4 +31,3 @@
 
 <? endforeach; ?>
 
-<? include_once ENGINE_DIR . 'feedback-item.php'; ?>

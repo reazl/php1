@@ -11,10 +11,18 @@ function getImage($id){
     return $images[0];
 }
 
-function getImages(){
-    $sql = "SELECT * FROM images ORDER BY likes DESC";
+function getImages($field, $direction){
+    $sql = "SELECT * FROM images ORDER BY {$field} {$direction}";
     $images = getAssocResult($sql);
     //var_dump($images);
+    return $images;
+}
+
+function imgByFB($direct){
+    $sql = "Select `item-id`, count(*) from `feedback-item` group by `item-id` ORDER BY COUNT(*) {$direct}";
+
+    $images = getAssocResult($sql);
+    var_dump($images);
     return $images;
 }
 
