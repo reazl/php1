@@ -1,0 +1,57 @@
+body {
+
+}
+.gallery img{
+	margin:5px;
+	border:3px solid #fff;
+
+}
+
+.photo{
+
+	position: relative;
+	display: inline-block;
+
+}
+
+.item .photo{
+	margin-right: 20px;
+	float: left;
+}
+.item > *:not(.photo){
+	margin-bottom: 20px;
+}
+a:hover img {
+	border: 3px solid #034F80;
+}
+a{
+	text-decoration: none;
+}
+.likes-count{
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	background-color: white;
+	display: block;
+}
+
+.gallery .price {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	background-color: white;
+	display: block;
+}
+
+.like{
+	border: none;
+	background-size: 12px 17px;
+	background-image: url(http://pngimg.com/uploads/like/like_PNG51.png);
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	background-color: transparent;
+}
+.load input{
+	margin: 10px;
+}
