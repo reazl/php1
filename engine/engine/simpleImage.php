@@ -15,12 +15,7 @@ class SimpleImage {
             $this->image = imagecreatefrompng($filename);
         }
     }
-    function save2DB($filename){
 
-        $sql = "INSERT INTO `images` (`filename`, `likes`) VALUES (\"$filename\", '0')";
-        $result = executeQuery($sql);
-        return $result;
-    }
     function save($dir, $filename, $image_type=IMAGETYPE_JPEG, $compression=75, $permissions=null) {
         if( $image_type == IMAGETYPE_JPEG ) {
             imagejpeg($this->image, $dir . $filename,$compression);

@@ -1,23 +1,24 @@
 $(document).ready(function(){
 
     $(".like").on('click', function(){
-        var id = $('#lucas').data("id");
+        var id = $(this).data("id");
 
         $.ajax({
-            url: "/image/",
+            url: "/addlike/",
             type: "POST",
             dataType : "json",
             data:{
                 id: id,
             },
-            error: function(answer) {console.log(answer);
+            error: function() {
                 console.log("ajax error");},
             success: function(answer){
-                console.log(answer);
                 $('#likes-count_'+id).html(answer.likes);
+
             }
 
         })
+
     });
 
 });

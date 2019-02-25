@@ -16,34 +16,11 @@
 <? endforeach; ?>
 </div>
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" class="load">
             <p>Загрузить новое изображение в галерею:</p>
-            <input type="file" name="new-file">
+            <input type="text" name="describe" placeholder="Добавить описание изображения">Добавить описание изображения<br>
+            <input type="text" name="price" placeholder="Цена лота">Цена лота<br>
+            <input type="file" name="new-file"><br>
             <input type="submit" value="Загрузить" name="upload">
         </form>
 
-<script>
-    $(document).ready(function(){
-
-        $(".like").on('click', function(){
-            var id = $(this).data("id");
-
-            $.ajax({
-                url: "/addlike/",
-                type: "POST",
-                dataType : "json",
-                data:{
-                    id: id,
-                },
-                error: function(answer) {console.log(answer);
-                console.log("ajax error");},
-                success: function(answer){
-                    console.log(answer);
-                    $('#likes-count_'+id).html(answer.likes);
-                }
-
-            })
-        });
-
-    });
-</script>

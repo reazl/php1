@@ -8,10 +8,19 @@ body {
 }
 
 .photo{
+
 	position: relative;
 	display: inline-block;
+
 }
 
+.item .photo{
+	margin-right: 20px;
+	float: left;
+}
+.item > *:not(.photo){
+	margin-bottom: 20px;
+}
 a:hover img {
 	border: 3px solid #034F80;
 }
